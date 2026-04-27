@@ -118,6 +118,7 @@ with st.sidebar:
 bl = simulate(0, 0, 0, 0, 0, 0)
 cb = simulate(acq_up, adopt_up, freq_up, bal_up, card_up / 100, active_up / 100)
 
+cb_cost  = cashback_cost(cb, std_r, boost_r, prem_r, cap, mix_prem, mix_boost)
 bl_gross = sum(m["gross_int"] for m in bl)
 cb_gross = sum(m["gross_int"] for m in cb)
 bl_int   = sum(m["interest"]  for m in bl)
