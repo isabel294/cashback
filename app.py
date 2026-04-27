@@ -66,7 +66,7 @@ def simulate(acq_up, adopt_up, freq_up, bal_up, card_up, active_up):
     for i in range(MONTHS):
         budget      = BUDGET_ACTIVES[i] * (1 + acq_up)
         verified_in = budget * SHARE_NEW * (1 + adopt_up) + PAID_USERS[i] * SHARE_PAID
-        churners    = verified * CHURN
+        churners    = BASE_VERIFIED_START * CHURN
         verified    = verified + verified_in - churners
         active_cards = verified * CARD_SHARE_BASE * (1 + card_up) * ACTIVE_SHARE_BASE * (1 + active_up)
         tx_count     = active_cards * TX_PER_CARD_BASE * (1 + freq_up)
