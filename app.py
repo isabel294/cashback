@@ -245,42 +245,42 @@ with st.sidebar:
     st.markdown("<h2>Assumptions</h2>", unsafe_allow_html=True)
 
     st.markdown('<div class="sec-hdr">Cashback rates</div>', unsafe_allow_html=True)
-    std_rate     = st.slider("Standard rate",            0.001, 0.010, 0.003, 0.001, format="%.3f")
-    boost_rate   = st.slider("Boosted rate",             0.005, 0.050, 0.020, 0.005, format="%.3f")
-    premium_rate = st.slider("Premium rate (sellers)",   0.010, 0.080, 0.040, 0.005, format="%.3f")
+    std_rate     = st.slider("Standard rate",            0.1, 1.0, 0.3, 0.1, format="%.1f%%") / 100
+    boost_rate   = st.slider("Boosted rate",             0.5, 5.0, 2.0, 0.5, format="%.1f%%") / 100
+    premium_rate = st.slider("Premium rate (sellers)",   1.0, 8.0, 4.0, 0.5, format="%.1f%%") / 100
     monthly_cap  = st.slider("Monthly cap per user (€)", 10, 100, 30, 5)
 
     st.markdown('<div class="sec-hdr">Spend mix</div>', unsafe_allow_html=True)
-    pct_premium = st.slider("% spend – premium sellers",    0.00, 0.10, 0.010, 0.005, format="%.3f")
-    pct_boosted = st.slider("% spend – boosted categories", 0.05, 0.20, 0.093, 0.003, format="%.3f")
+    pct_premium = st.slider("% spend – premium sellers",    0.0, 10.0, 1.0, 0.5, format="%.1f%%") / 100
+    pct_boosted = st.slider("% spend – boosted categories", 5.0, 20.0, 9.3, 0.3, format="%.1f%%") / 100
 
     st.markdown('<div class="sec-hdr">Banking uplifts</div>', unsafe_allow_html=True)
-    acq_uplift         = st.slider("New user acquisition uplift",        0.0, 0.20, 0.02, 0.01, format="%.2f")
-    adoption_uplift    = st.slider("Banking adoption uplift (sign-ups)", 0.0, 0.50, 0.20, 0.05, format="%.2f")
-    tx_uplift          = st.slider("Transactions / card uplift",         0.0, 1.00, 0.40, 0.05, format="%.2f")
-    card_uplift        = st.slider("Card share uplift",                  0.0, 0.20, 0.05, 0.01, format="%.2f")
-    active_card_uplift = st.slider("Active card share uplift",           0.0, 0.50, 0.20, 0.05, format="%.2f")
-    balance_uplift     = st.slider("Avg. balance uplift",                0.0, 0.20, 0.05, 0.01, format="%.2f")
+    acq_uplift         = st.slider("New user acquisition uplift",        0, 20,  2, 1, format="%d%%") / 100
+    adoption_uplift    = st.slider("Banking adoption uplift (sign-ups)", 0, 50, 20, 5, format="%d%%") / 100
+    tx_uplift          = st.slider("Transactions / card uplift",         0,100, 40, 5, format="%d%%") / 100
+    card_uplift        = st.slider("Card share uplift",                  0, 20,  5, 1, format="%d%%") / 100
+    active_card_uplift = st.slider("Active card share uplift",           0, 50, 20, 5, format="%d%%") / 100
+    balance_uplift     = st.slider("Avg. balance uplift",                0, 20,  5, 1, format="%d%%") / 100
 
     st.markdown('<div class="sec-hdr">SaaS uplifts</div>', unsafe_allow_html=True)
-    ct_paid_uplift = st.slider("Conversion to paid uplift", 0.0, 0.20, 0.02, 0.01, format="%.2f")
-    arpa_uplift    = st.slider("ARPA uplift",               0.0, 0.20, 0.00, 0.01, format="%.2f")
+    ct_paid_uplift = st.slider("Conversion to paid uplift", 0, 20, 2, 1, format="%d%%") / 100
+    arpa_uplift    = st.slider("ARPA uplift",               0, 20, 0, 1, format="%d%%") / 100
 
     st.markdown('<div class="sec-hdr">Baseline assumptions</div>', unsafe_allow_html=True)
-    share_sig   = st.number_input("Share of adopters – new sign-ups", 0.01, 0.30, 0.100, 0.010, format="%.3f")
-    share_paid  = st.number_input("Share of adopters – paid users",   0.005,0.10, 0.025, 0.005, format="%.3f")
-    churn_rate  = st.number_input("Monthly banking churn rate",       0.001,0.05, 0.010, 0.001, format="%.3f")
-    card_share  = st.number_input("Share of users with card",         0.3,  1.0,  0.70,  0.05,  format="%.2f")
-    act_share   = st.number_input("Share of active cards",            0.3,  1.0,  0.60,  0.05,  format="%.2f")
-    tx_pc       = st.number_input("Card transactions / card / month", 1.0,  20.0, 8.3,   0.5,   format="%.1f")
-    tx_amt      = st.number_input("Avg. transaction amount (€)",      10.0, 150.0,52.0,  5.0)
-    avg_balance = st.number_input("Avg. balance – baseline (€)",      500.0,10000.0,2850.0,100.0)
-    ester_rate  = st.number_input("ESTER rate",                       0.005,0.05, 0.019, 0.001, format="%.3f")
+    share_sig   = st.number_input("Share of adopters – new sign-ups (%)",  1.0, 30.0, 10.0, 1.0,  format="%.1f%%") / 100
+    share_paid  = st.number_input("Share of adopters – paid users (%)",    0.5, 10.0,  2.5, 0.5,  format="%.1f%%") / 100
+    churn_rate  = st.number_input("Monthly banking churn rate (%)",        0.1,  5.0,  1.0, 0.1,  format="%.1f%%") / 100
+    card_share  = st.number_input("Share of users with card (%)",         30.0,100.0, 70.0, 5.0,  format="%.0f%%") / 100
+    act_share   = st.number_input("Share of active cards (%)",            30.0,100.0, 60.0, 5.0,  format="%.0f%%") / 100
+    tx_pc       = st.number_input("Card transactions / card / month",      1.0, 20.0,  8.3,  0.5, format="%.1f")
+    tx_amt      = st.number_input("Avg. transaction amount (€)",          10.0,150.0, 52.0,  5.0)
+    avg_balance = st.number_input("Avg. balance – baseline (€)",         500.0,10000.0,2850.0,100.0)
+    ester_rate  = st.number_input("ESTER rate (%)",                        0.5,  5.0,  1.9,  0.1, format="%.1f%%") / 100
 
     st.markdown('<div class="sec-hdr">Subscription conversion & retention</div>', unsafe_allow_html=True)
-    ct_base   = st.number_input("Conversion to paid – baseline",     0.10, 0.60, 0.285, 0.005, format="%.3f")
-    arpa_base = st.number_input("ARPA – converted sign-ups (€ / mo)",10.0, 60.0, 28.2,  0.5)
-    sub_churn = st.number_input("Monthly subscription churn rate",   0.005,0.10, 0.020, 0.005, format="%.3f")
+    ct_base   = st.number_input("Conversion to paid – baseline (%)",  10.0, 60.0, 28.5, 0.5, format="%.1f%%") / 100
+    arpa_base = st.number_input("ARPA – converted sign-ups (€ / mo)", 10.0, 60.0, 28.2, 0.5)
+    sub_churn = st.number_input("Monthly subscription churn rate (%)",  0.5, 10.0,  2.0, 0.5, format="%.1f%%") / 100
 
 
 # ── Run model ─────────────────────────────────────────────────────────────────
