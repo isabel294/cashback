@@ -188,8 +188,7 @@ d_int = cum_int_c    - cum_int_b
 d_sub = cum_sub_c    - cum_sub_b
 total_d = d_ic + d_int + d_sub
 
-DEC26 = 6
-b26 = base.iloc[DEC26]; c26 = cash.iloc[DEC26]
+
 
 
 # ── Page ──────────────────────────────────────────────────────────────────────
@@ -205,7 +204,7 @@ with c4: st.markdown(mcard("Δ Interest revenue",       fmt(d_int),   d_int),   
 PURPLE="351c75"; LAV="a78bfa"; RED="ef4444"
 P="#"+PURPLE; L="#"+LAV; R="#"+RED
 
-tab1,tab2,tab3 = st.tabs(["📊 Charts","📋 Results table","🔍 Per-user view (Dec 2026)"])
+tab1, = st.tabs(["📊 Charts"])
 
 with tab1:
     md = (cash["net_interchange"]+cash["interest"]+cash["sub_mrr"]) - \
@@ -245,73 +244,4 @@ with tab1:
         fig.update_layout(title="Interest revenue (€/month)",height=270,plot_bgcolor="white",paper_bgcolor="white",yaxis_title="€",margin=dict(t=35,b=20,l=60,r=20))
         st.plotly_chart(fig,use_container_width=True)
 
-with tab2:
-    st.markdown("#### Cumulative totals – Jun 2026 to Dec 2028")
-    rows_t=[
-        ("Gross interchange – Cashback","",fmt(cum_gross_ic_c),""),
-        ("Cashback cost","",fmt(cum_cb),""),
-        ("Net interchange – Baseline",fmt(cum_net_ic_b),"",""),
-        ("Net interchange – Cashback","",fmt(cum_net_ic_c),fmt(d_ic)),
-        ("Interest revenue – Baseline",fmt(cum_int_b),"",""),
-        ("Interest revenue – Cashback","",fmt(cum_int_c),fmt(d_int)),
-        ("Subscription MRR – Baseline",fmt(cum_sub_b),"",""),
-        ("Subscription MRR – Cashback","",fmt(cum_sub_c),fmt(d_sub)),
-        ("─────────────────────","","",""),
-        ("Δ Net interchange","","",fmt(d_ic)),
-        ("Δ Interest revenue","","",fmt(d_int)),
-        ("Δ Subscription revenue","","",fmt(d_sub)),
-        ("Total Δ vs. Baseline","","",fmt(total_d)),
-    ]
-    st.dataframe(pd.DataFrame(rows_t,columns=["Metric","Baseline","Cashback","Delta"]),use_container_width=True,hide_index=True)
 
-    st.markdown("#### Monthly detail")
-    det=pd.DataFrame({
-        "Month":[m.strftime("%b %Y") for m in MONTHS],
-        "Banking users – Base":base["verified_eom"].round(0).astype(int),
-        "Banking users – CB":cash["verified_eom"].round(0).astype(int),
-        "Gross IC – CB (€)":cash["gross_interchange"].round(0),
-        "Cashback cost (€)":cash["cashback_cost"].round(0),
-        "Net IC – Base (€)":base["net_interchange"].round(0),
-        "Net IC – CB (€)":cash["net_interchange"].round(0),
-        "Interest – Base (€)":base["interest"].round(0),
-        "Interest – CB (€)":cash["interest"].round(0),
-        "Sub MRR – Base (€)":base["sub_mrr"].round(0),
-        "Sub MRR – CB (€)":cash["sub_mrr"].round(0),
-    })
-    st.dataframe(det,use_container_width=True,hide_index=True)
-
-with tab3:
-    st.markdown("#### Per Banking user – December 2026")
-    st.caption("Point-in-time snapshot for Dec 2026 (month 7 of the model).")
-
-    b_u=b26["verified_eom"]; c_u=c26["verified_eom"]
-    b_ic_pu  = b26["gross_interchange"] / b_u
-    c_ic_pu  = c26["gross_interchange"] / c_u
-    b_int_pu = b26["interest"] / b_u
-    c_int_pu = c26["interest"] / c_u
-    b_sub_pu = b26["sub_mrr"] / PAID_USERS_EOM[DEC26]
-    c_sub_pu = c26["sub_mrr"] / PAID_USERS_EOM[DEC26]
-    b_cb_pu  = 0.0
-    c_cb_pu  = abs(c26["cashback_cost"]) / c26["active_cards"] if c26["active_cards"]>0 else 0
-    b_net = b_ic_pu+b_int_pu+b_sub_pu
-    c_net = c_ic_pu+c_int_pu+c_sub_pu-c_cb_pu
-
-    pu_rows=[
-        ("Avg. Banking users (EOM)",         f"{b_u:,.0f}",   f"{c_u:,.0f}",   f"{c_u-b_u:+,.0f}"),
-        ("Gross interchange/user (€/mo)",    f"{b_ic_pu:.4f}",f"{c_ic_pu:.4f}",f"{c_ic_pu-b_ic_pu:+.4f}"),
-        ("Interest revenue/user (€/mo)",     f"{b_int_pu:.4f}",f"{c_int_pu:.4f}",f"{c_int_pu-b_int_pu:+.4f}"),
-        ("Subscription MRR/user (€/mo)",     f"{b_sub_pu:.4f}",f"{c_sub_pu:.4f}",f"{c_sub_pu-b_sub_pu:+.4f}"),
-        ("Cashback cost/active card (€/mo)", "–",             f"{c_cb_pu:.4f}",f"{c_cb_pu:+.4f}"),
-        ("Net revenue/user (€/mo)",           f"{b_net:.4f}",  f"{c_net:.4f}",  f"{c_net-b_net:+.4f}"),
-    ]
-    st.dataframe(pd.DataFrame(pu_rows,columns=["Metric","Baseline","Cashback","Delta"]),use_container_width=True,hide_index=True)
-
-    cats=["Gross IC","Interest","Sub MRR","Cashback cost","Net/user"]
-    fig=go.Figure(data=[
-        go.Bar(name="Baseline",x=cats,y=[b_ic_pu,b_int_pu,b_sub_pu,0,b_net],marker_color=L),
-        go.Bar(name="Cashback",x=cats,y=[c_ic_pu,c_int_pu,c_sub_pu,-c_cb_pu,c_net],marker_color=P),
-    ])
-    fig.update_layout(barmode="group",title="Revenue per user – Dec 2026 (€/month)",
-                      height=360,plot_bgcolor="white",paper_bgcolor="white",
-                      yaxis_title="€/user/month",margin=dict(t=40,b=20,l=60,r=20))
-    st.plotly_chart(fig,use_container_width=True)
