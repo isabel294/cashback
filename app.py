@@ -267,20 +267,20 @@ with st.sidebar:
     arpa_uplift    = st.slider("ARPA uplift",               0, 20, 0, 1, format="%d%%") / 100
 
     st.markdown('<div class="sec-hdr">Baseline assumptions</div>', unsafe_allow_html=True)
-    share_sig   = st.number_input("Share of adopters – new sign-ups (%)",  1.0, 30.0, 10.0, 1.0,  format="%.1f%%") / 100
-    share_paid  = st.number_input("Share of adopters – paid users (%)",    0.5, 10.0,  2.5, 0.5,  format="%.1f%%") / 100
-    churn_rate  = st.number_input("Monthly banking churn rate (%)",        0.1,  5.0,  1.0, 0.1,  format="%.1f%%") / 100
-    card_share  = st.number_input("Share of users with card (%)",         30.0,100.0, 70.0, 5.0,  format="%.0f%%") / 100
-    act_share   = st.number_input("Share of active cards (%)",            30.0,100.0, 60.0, 5.0,  format="%.0f%%") / 100
+    share_sig   = st.number_input("Share of adopters – new sign-ups (%)",  1.0, 30.0, 10.0, 1.0,  format="%.1f") / 100
+    share_paid  = st.number_input("Share of adopters – paid users (%)",    0.5, 10.0,  2.5, 0.5,  format="%.1f") / 100
+    churn_rate  = st.number_input("Monthly banking churn rate (%)",        0.1,  5.0,  1.0, 0.1,  format="%.1f") / 100
+    card_share  = st.number_input("Share of users with card (%)",         30.0,100.0, 70.0, 5.0,  format="%.0f") / 100
+    act_share   = st.number_input("Share of active cards (%)",            30.0,100.0, 60.0, 5.0,  format="%.0f") / 100
     tx_pc       = st.number_input("Card transactions / card / month",      1.0, 20.0,  8.3,  0.5, format="%.1f")
     tx_amt      = st.number_input("Avg. transaction amount (€)",          10.0,150.0, 52.0,  5.0)
     avg_balance = st.number_input("Avg. balance – baseline (€)",         500.0,10000.0,2850.0,100.0)
-    ester_rate  = st.number_input("ESTER rate (%)",                        0.5,  5.0,  1.9,  0.1, format="%.1f%%") / 100
+    ester_rate  = st.number_input("ESTER rate (%)",                        0.5,  5.0,  1.9,  0.1, format="%.1f") / 100
 
     st.markdown('<div class="sec-hdr">Subscription conversion & retention</div>', unsafe_allow_html=True)
-    ct_base   = st.number_input("Conversion to paid – baseline (%)",  10.0, 60.0, 28.5, 0.5, format="%.1f%%") / 100
+    ct_base   = st.number_input("Conversion to paid – baseline (%)",  10.0, 60.0, 28.5, 0.5, format="%.1f") / 100
     arpa_base = st.number_input("ARPA – converted sign-ups (€ / mo)", 10.0, 60.0, 28.2, 0.5)
-    sub_churn = st.number_input("Monthly subscription churn rate (%)",  0.5, 10.0,  2.0, 0.5, format="%.1f%%") / 100
+    sub_churn = st.number_input("Monthly subscription churn rate (%)",  0.5, 10.0,  2.0, 0.5, format="%.1f") / 100
 
 
 # ── Run model ─────────────────────────────────────────────────────────────────
