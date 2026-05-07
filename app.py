@@ -11,9 +11,11 @@ st.markdown(
     unsafe_allow_html=True,
 )
 st.markdown("""<style>
-  /* Hide Streamlit header */
-  [data-testid="stHeader"] { display: none !important; }
-  header { display: none !important; }
+  /* Hide only the app icon in the top-left header, keep sidebar toggle */
+  [data-testid="stHeader"] { background: transparent !important; }
+  [data-testid="stHeader"] a[href*="streamlit"] { display: none !important; }
+  [data-testid="stDecoration"] { display: none !important; }
+  [data-testid="stStatusWidget"] { visibility: hidden !important; }
   /* Global font */
   html, body, [class*="css"], .stApp { font-family: 'Jost', sans-serif !important; }
 
