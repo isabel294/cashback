@@ -6,9 +6,11 @@ import plotly.graph_objects as go
 st.set_page_config(page_title="Cashback Business Case", page_icon="🌿", layout="wide")
 
 # ── Sage & Parchment · Cormorant Garamond + Jost ──────────────────────────────
-st.markdown("""
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
+st.markdown(
+    '<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">',
+    unsafe_allow_html=True,
+)
+st.markdown("""<style>
   /* Global font */
   html, body, [class*="css"], .stApp { font-family: 'Jost', sans-serif !important; }
 
