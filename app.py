@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 
-st.set_page_config(page_title="Cashback Business Case", page_icon="🌿", layout="wide")
+st.set_page_config(page_title="Cashback Business Case", layout="wide")
 
 # ── Sage & Parchment · Cormorant Garamond + Jost ──────────────────────────────
 st.markdown(
