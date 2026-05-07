@@ -11,6 +11,9 @@ st.markdown(
     unsafe_allow_html=True,
 )
 st.markdown("""<style>
+  /* Hide Streamlit header */
+  [data-testid="stHeader"] { display: none !important; }
+  header { display: none !important; }
   /* Global font */
   html, body, [class*="css"], .stApp { font-family: 'Jost', sans-serif !important; }
 
