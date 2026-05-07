@@ -204,7 +204,7 @@ with c4: st.markdown(mcard("Δ Interest revenue",       fmt(d_int),   d_int),   
 PURPLE="351c75"; LAV="a78bfa"; RED="ef4444"
 P="#"+PURPLE; L="#"+LAV; R="#"+RED
 
-tab1, = st.tabs(["📊 Charts"])
+tab1, tab2 = st.tabs(["📊 Charts", "👤 Unit economics"])
 
 with tab1:
     md = (cash["net_interchange"]+cash["interest"]+cash["sub_mrr"]) - \
@@ -243,5 +243,46 @@ with tab1:
         fig.add_trace(go.Scatter(x=MONTHS,y=cash["interest"],name="Cashback",line=dict(color=P),fill="tonexty",fillcolor="rgba(167,139,250,0.12)"))
         fig.update_layout(title="Interest revenue (€/month)",height=270,plot_bgcolor="white",paper_bgcolor="white",yaxis_title="€",margin=dict(t=35,b=20,l=60,r=20))
         st.plotly_chart(fig,use_container_width=True)
+
+with tab2:
+    st.caption("All metrics per Banking user (EOM), shown for each month. Baseline = dashed, Cashback = solid.")
+
+    # Per-user series: divide each monthly metric by verified_eom
+    b_ic_pu   = base["gross_interchange"] / base["verified_eom"]
+    c_ic_pu   = cash["gross_interchange"] / cash["verified_eom"]
+    b_int_pu  = base["interest"]          / base["verified_eom"]
+    c_int_pu  = cash["interest"]          / cash["verified_eom"]
+    b_cb_pu   = pd.Series(np.zeros(31))
+    c_cb_pu   = cash["cashback_cost"].abs() / cash["verified_eom"]
+    b_net_pu  = base["net_interchange"]   / base["verified_eom"]
+    c_net_pu  = cash["net_interchange"]   / cash["verified_eom"]
+    b_sub_pu  = base["sub_mrr"]           / base["verified_eom"]
+    c_sub_pu  = cash["sub_mrr"]           / cash["verified_eom"]
+
+    def pu_chart(title, b_series, c_series, yaxis="€/user/month"):
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=MONTHS, y=b_series, name="Baseline",
+                                 line=dict(color=L, dash="dash")))
+        fig.add_trace(go.Scatter(x=MONTHS, y=c_series, name="Cashback",
+                                 line=dict(color=P)))
+        fig.update_layout(title=title, height=260, plot_bgcolor="white",
+                          paper_bgcolor="white", yaxis_title=yaxis,
+                          margin=dict(t=35, b=20, l=60, r=20))
+        return fig
+
+    u1, u2 = st.columns(2)
+    with u1:
+        st.plotly_chart(pu_chart("Gross interchange per user (€/mo)", b_ic_pu,  c_ic_pu),  use_container_width=True)
+    with u2:
+        st.plotly_chart(pu_chart("Interest per user (€/mo)",          b_int_pu, c_int_pu), use_container_width=True)
+
+    u3, u4 = st.columns(2)
+    with u3:
+        st.plotly_chart(pu_chart("Cashback cost per user (€/mo)",     b_cb_pu,  c_cb_pu),  use_container_width=True)
+    with u4:
+        st.plotly_chart(pu_chart("Net interchange per user (€/mo)",   b_net_pu, c_net_pu), use_container_width=True)
+
+    st.plotly_chart(pu_chart("Additional subscription MRR per user (€/mo)", b_sub_pu, c_sub_pu),
+                    use_container_width=True)
 
 
