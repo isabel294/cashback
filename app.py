@@ -252,11 +252,11 @@ with st.sidebar:
     st.markdown('<div class="sec-hdr">Cashback rates</div>', unsafe_allow_html=True)
     std_rate     = st.slider("Standard rate",            0.1, 1.0, 0.3, 0.1, format="%.1f%%") / 100
     boost_rate   = st.slider("Boosted rate",             0.5, 5.0, 2.0, 0.5, format="%.1f%%") / 100
-    premium_rate = st.slider("Premium rate (sellers)",   1.0, 8.0, 4.0, 0.5, format="%.1f%%") / 100
+    premium_rate = st.slider("Premium rate (profession category)", 1.0, 8.0, 3.0, 0.5, format="%.1f%%") / 100
     monthly_cap  = st.slider("Monthly cap per user (€)", 10, 100, 30, 5)
 
     st.markdown('<div class="sec-hdr">Spend mix</div>', unsafe_allow_html=True)
-    pct_premium = st.slider("% spend – premium sellers",    0.0, 10.0, 1.0, 0.5, format="%.1f%%") / 100
+    pct_premium = st.slider("% spend – profession category",    0.0, 10.0, 1.5, 0.5, format="%.1f%%") / 100
     pct_boosted = st.slider("% spend – boosted categories", 5.0, 20.0, 9.3, 0.3, format="%.1f%%") / 100
 
     st.markdown('<div class="sec-hdr">Banking uplifts</div>', unsafe_allow_html=True)
